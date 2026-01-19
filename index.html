@@ -100,7 +100,7 @@
     </div>
 
     <div class="muted" style="margin-top:10px;">
-      Scoring per player: if they list N games, #1 gets N points, #2 gets N−1 … last gets 1. Unlisted = 0.
+      Scoring: N is the number of games from the longest list, #1 gets N points, #2 gets N-1 … last gets 1. Unlisted = 0.
       Sorting tie-breakers: higher “in lists” → better best rank → alphabetical.
     </div>
   </div>
@@ -326,6 +326,7 @@
   function calculate() {
     const players = readPlayers();
     const nPlayers = players.length;
+    const maxRanked = Math.max(0, ...players.map(p => p.ranked.length));
 
     // display name per key (first seen)
     const display = new Map();
@@ -366,7 +367,7 @@
       for (let i = 0; i < nPlayers; i++) {
         const m = rankMaps[i];
         const rank = m.get(key);
-        const N = players[i].ranked.length;
+        const N = maxRanked;
         if (rank != null) {
           inLists += 1;
           bestRank = Math.min(bestRank, rank);
